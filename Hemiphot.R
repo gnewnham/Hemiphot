@@ -82,19 +82,17 @@ SetCircle = function(image = "", cx = 0, cy = 0, cr = 0){
 
 ##########          Plot image         ##########
 
-PlotHemiImage = function(image = "", draw.circle = T, channel = ""){
+PlotHemiImage = function(image = "", draw.circle = T, channel = "", main=""){
   # can plot only in R 2.11.0 and higher  
-  if (exists("rasterImage")){ 
+  if (exists("rasterImage")){
+  plot(c(0,dim(image[[1]])[2]), c(0,dim(image[[1]])[1]), asp = 1,
+           xlab = "columns", ylab = "rows", type = "n", main=main)
     if(channel %in% c("R", "G", "B")){
-      plot(c(0,dim(image[[1]])[2]), c(0,dim(image[[1]])[1]), asp = 1,
-           xlab = "columns", ylab = "rows", type = "n" )
-      if(channel == "R") rasterImage(image[[1]][,,1], xleft = 0, ybottom = 0, xright = dim(image[[1]])[2], ytop = dim(image[[1]])[1], main = "R")
-      if(channel == "G") rasterImage(image[[1]][,,2], xleft = 0, ybottom = 0, xright = dim(image[[1]])[2], ytop = dim(image[[1]])[1], main = "G")
-      if(channel == "B") rasterImage(image[[1]][,,3], xleft = 0, ybottom = 0, xright = dim(image[[1]])[2], ytop = dim(image[[1]])[1], main = "B")
+      if(channel == "R") rasterImage(image[[1]][,,1], xleft = 0, ybottom = 0, xright = dim(image[[1]])[2], ytop = dim(image[[1]])[1])
+      if(channel == "G") rasterImage(image[[1]][,,2], xleft = 0, ybottom = 0, xright = dim(image[[1]])[2], ytop = dim(image[[1]])[1])
+      if(channel == "B") rasterImage(image[[1]][,,3], xleft = 0, ybottom = 0, xright = dim(image[[1]])[2], ytop = dim(image[[1]])[1])
       if(draw.circle == T) DrawCircle(image[[2]], image[[3]], image[[4]])
     }else{
-      plot(c(0,dim(image[[1]])[2]), c(0,dim(image[[1]])[1]), asp = 1,
-           xlab = "columns", ylab = "rows", type = "n" )
       rasterImage(image[[1]], xleft = 0, ybottom = 0, xright = dim(image[[1]])[2], ytop = dim(image[[1]])[1])         ## all colors
       if(draw.circle == T) DrawCircle(image[[2]], image[[3]], image[[4]])
     }
